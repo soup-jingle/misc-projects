@@ -1,0 +1,34 @@
+Part 1:
+
+1. 32 semaphores.
+2. 64 locks.
+3. In SemCreate(), a handle to a semaphore is first created. This handle is used to iterate through the array which holds all (pre)existing semaphores to find one which is not in use. Then a semaphore is initialized in that open space, if such an open space exists.
+4. SemWait() decrements the count of the semaphore struct. If that semaphore's count is at that point negative, it also creates a Link to put on the semaphore's queue (that link contains a PCB so that the semaphore knows what to wake on signal). The process then sleeps. SemSignal() increments the semaphore's count. If the count at that point is 0 or greated, the leading process on the semaphore's queue is woken up.
+5. A handle is basically a position or offset (so an integer )in an array of structs. It is used to access semaphores because all semaphores already exist in an array, so the handle gives the index of a particular semaphore in that array.
+
+
+Part 2:
+
+struct Lock: Contains a Sem (Lock is mostly a wrapper for binary semaphores), an int for whether it is in use or not, and a pid for which process owns it. I probably should have just used one int field for the pid and set it to -1 when not in use.
+
+struct Cond: contains a handle to a Lock and an int for whether or not it is in use (not sure if the int is necessary);
+
+LockCreate(): Find an open lock in the 'locks' array, then initialize it (which means initializing its Sem) if an unused lock exists.
+
+LockHandleAcquire(): Ensure lock_t passed to it is valid. Obtain lock from handle. If the lock is in use, check to make sure that the calling process owns it. If it is not in use, set 'inuse' to 1 and set pid to that of the current process. Wait on lock.
+
+LockHandleRelease(): Ensure lock_t valid. Obtain lock from handle. If lock is in use, ensure calling process owns it. If so, set 'inuse' to 0 and signal lock.
+
+CondCreate(): Create a Cond in exactly the same way Locks and Sems are made.
+
+CondHandleWait(): Ensure cond_t handle is valid. Obtain Cond from handle, then Lock from that Cond. Wait on the Lock's Sem.
+
+CondHandleSignal(): CondHandleWait() except it signals the Cond's Lock's Sem instead of waiting on it.
+
+CondHandleBroadcast(): Continues signaling as in CondHandleSignal() until there is nothing left to signal.
+
+
+Part 3:
+My implementation absolutely does not work because I did not even convert to and from strings when creating new processes. What I intended to happen, though, was for run.c to create as many producers and consumers as were specified via command line arguments.
+Producer would receive as arguments the semaphores for Full and Empty, the Mutex which would protect the shared array, the array itself, as well as the the string "hello world" itself, and an index to each of those char arrays. The string "hello world" with an index so that if two or more producers are working, they can share that index so that they don't produce the same letter several times. Besides that, this implementation was very much the same as for the previous homework producer/consumer problem.
+The consumer received all the same things as the producer except for the string "hello world" and its index. Consumers also shared a different pointer to the shared 5-byte array from the producers.

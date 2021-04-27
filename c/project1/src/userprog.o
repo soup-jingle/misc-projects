@@ -1,0 +1,64 @@
+; Compiled by GCC
+.data
+	.align 2
+LC0:
+	.ascii "The process PID is %d\n\000"
+	.align 2
+LC1:
+	.ascii "Approximate time to execute the loop: %d ms\n\000"
+.text
+	.align 2
+.proc _main
+.global _main
+_main:
+;  Function 'main'; 0 bytes of locals, 0 regs to save.
+	sw	-4(r29),r30	; push fp
+	add	r30,r0,r29	; fp = sp
+	sw	-8(r29),r31	; push ret addr
+	subui	r29,r29,#8	; alloc local storage
+	jal	___main
+	nop	; not filled.
+	jal	_GetPID
+	nop	; not filled.
+	addi	r29,r29,#-8
+	lhi	r4,((LC0)>>16)&0xffff
+	addui	r4,r4,(LC0)&0xffff
+	sw	(r29),r4
+	sw	4(r29),r1
+	jal	_Printf
+	nop	; not filled.
+	jal	_GetSystemTime
+	nop	; not filled.
+	slli	r2,r1,#0x1
+	add	r2,r2,r1
+	slli	r2,r2,#0x3
+	add	r1,r2,r1
+	slli	r3,r1,#0x2
+	addi	r2,r0,#0
+	addi	r29,r29,#8
+	lhi	r31,#152
+	addui	r31,r31,#38527
+L11:
+	addi	r2,r2,#1
+	sle	r1,r2,r31
+	bnez	r1,L11
+	nop	; not filled.
+	jal	_GetSystemTime
+	nop	; not filled.
+	slli	r2,r1,#0x1
+	add	r2,r2,r1
+	slli	r2,r2,#0x3
+	add	r1,r2,r1
+	slli	r1,r1,#0x2
+	addi	r29,r29,#-8
+	lhi	r4,((LC1)>>16)&0xffff
+	addui	r4,r4,(LC1)&0xffff
+	sw	(r29),r4
+	sub	r1,r1,r3
+	sw	4(r29),r1
+	jal	_Printf
+	nop	; not filled.
+	addi	r29,r29,#8
+	jal	_exit
+	nop
+.endproc _main

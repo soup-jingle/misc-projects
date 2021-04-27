@@ -1,0 +1,19 @@
+PART 1:
+
+In its original round-robin scheduler design, DLX takes the PCB of the first process on the run queue and runs that process for a predetermined amount of time. That process is then placed at the end of the queue.
+
+Preliminary design for the lottery scheduler will use random number generation to simulate tickets. There will be no maximum number of tickets, but there will be a 'current max' tickets, increased every time new tickets are distributed to a newly-scheduled process. Choosing which process to run will be determied in if-else blocks. For example, if there are two processes A and B, and A has 12 tickets and B has 6, then it would look like (ignoring the generalizations which would be implemented):
+						if (rand < 12) run A
+						else if (rand < 18) run B
+My implementation will be non-preemptive, so after a process runs, all tickets will be taken away from that process and the 'current max' variable will be decreased by that amount.
+
+
+
+PART 2:
+
+In order to change the current scheduler to a FCFS scheduler, all I did was simply comment out the line which set the timer for each process in the ProcessSchedule() function. This way, there was no timer for a process, thus there was no preemption.
+
+
+
+PART 3:
+

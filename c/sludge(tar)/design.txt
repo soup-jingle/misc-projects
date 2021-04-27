@@ -1,0 +1,49 @@
+DESIGN **************************
+
+The design was fairly simple in theory. I set up a small space at the beginning of the file for structs called Entries. This stored a hash (a rather trivial checksum in this case) of the file to be archived, its size, its name, how many other files were storing that same data, and the position in the archive of the file. The file structure looked like so:
+
+
+******************************************
+|  unsigned long long NUMBER_OF_ENTRIES  |
+******************************************
+|  Entry 1                               |
+|                                        |
+|  Entry 2                               |
+|                                        |
+|  . . .                                 |
+|                                        |
+******************************************
+|  File A                                |
+|                                        |
+|                                        |
+|----------------------------------------|
+|  File B                                |
+|                                        |
+|	 . . .                                 |
+
+
+Entry 1 corresponds to file A in the picture, at first. But as more entries are added, file A will have to be rotated to the very end of the file. If even more are added, file B will have to be relocated to the end of the file as well.
+When the archive is initially created, enough space is allocated in the header for 10 entries. This is to prevent immediately having to push data to the back, but the number could easily be modified if this number is too high, or perhaps too low.
+
+When reading the archive, the first value read is the NUMBER_OF_ENTRIES, which tells you how many consecutive entries there are. This simplifies the problem of keeping track of scattered metadata on the files, and keeping the Entries at the beginning of the file means fewer seeks through file data when all you may need is the metadata stored in the entries.
+
+[There was one large oversight, in that I *do* compact the files when data is deleted, but not when several Entries are deleted. So as I said before to illustrate how the archive works, it's possible that several entries can be added, pushing files A and B to the end of the file. However, if all those added Entries are later deleted, there is no mechanism for condensing the beginning of the files toward the end of the Entries. Some threshold mechanism on deletes would remedy that, but I did not have time to implement it].
+
+Files are stored in their entirety. Breaking them up into smaller chunks would have allowed for smaller archives, because of the reduncancy blocking hashing mechanism, but it also ended up being too time-consuming to try to implement.
+
+
+If two files hash to the same value, one new entry is added, with the proper file name, and its 'links' value is incremented by 1, so it is equal to 2. Also, the entry with that matching hash has its 'links' value incremented.
+
+Deletes check all hashes and decrement the 'links' value (and the Entry with the matching file name is deleted). The data itself is not touched unless there are no same-hash Entries, meaning no other entry points to that data. In this case, all data which lies AFTER the location of the deleted data is push down to that spot. After words, the file is truncated to the proper length (its old length minus the length of the deleted data).
+
+Extract recreates the files (there have been problems with different directories), but adds a ".ex" extension, to show that is the version which was extracted, and so that it does not overwrite the original file in case something were to go wrong.
+
+Listing only requires reading the metadata in the header section and printing out all the Entries' values.
+
+
+
+TESTING *******************************
+
+I tested mostly on my own computer. When I moved it to the home server, I ended up with segfaults (though it seems what was supposed to work still work, somehow). There are some bugs that I was not able to straighten out without seeming to actually make them worse. For example, creating an archive that initially starts with two files which hash to the same value (they are exactly the same) are both written, when only one should be.
+
+Some combinations of files work well, and others do not. I can't figure out the rhyme or reason behind it. For example, adding one file with the name of a file that already exists has always been caught in my testing. But when I add two files like that, they both got added (at least they incremented all the links values in the Entries properly).

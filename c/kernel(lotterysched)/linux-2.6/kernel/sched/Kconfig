@@ -1,0 +1,4 @@
+## ADD LOTTO SCHEDULER; PB ##
+config SCHED_LOTTO
+       bool "Use Lottery Scheduler"
+       default y

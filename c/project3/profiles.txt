@@ -1,0 +1,15 @@
+Below are the findings of the AVERAGE runtimes for processes for the different schedulers.
+I ran the userprog multiple times but with just one argument (which is what the columns below correspond to). "Lotto(low)" refers to lottery scheduler where low priority (low ticket count) processes are created first, whereas "Lotto(high)" means processes with higher ticket counts were created first.
+
+|             |      1 |        2 |      3 |      4 |       5 |       6 |       7 |
+|-------------+--------+----------+--------+--------+---------+---------+---------|
+| RR          | 15.655 |   40.349 | 60.465 | 80.548 | 100.657 | 120.446 | 140.851 |
+| FCFS        | 15.554 |       -- |     -- |     -- |      -- |      -- |      -- |
+| Lotto(low)  | 15.554 | 15.544** | 60.398 | 80.548 | 100.737 | 120.847 | 140.736 |
+| Lotto(high) | 15.554 |   40.450 | 60.634 | 80.673 | 100.697 | 121.375 | 140.202 |
+**It just so happened in this case that one process CONSISTENTLY ran for its entirety before the other process was scheduled once (due to the way I implemented Lottery, as mentioned in "design.txt").
+
+The above times are in seconds, and the range of individual processes were always within one second of this average, though the range did expand as more processes were created. Since there is essentially no significant time difference between any of these (the exception of course is first-come, first-served which consistently ran at 15.554s per process), it is somewhat discouraging and leads me to believe my implementation of lottery scheduler is incorrect. Though when I added debugger print statements to indicate when a process got skipped because it's "ticket was not drawn", it showed processes being skipped. In spite of that, it ran very similarly to Round Robin.
+
+In my timings, I did not store or print the arrive time for processes (though it was not indicated it should be printed by the 'TIMESTRINGs' either). This would have shown the downside to FCFS schedulers, because although every process finished in a short amount of time, this just means that they started later and finished right away, but almost masks the fact that they had to wait the runtime of every prior process before they started.
+	 I also did not store down/sleep times, which would have shown the downside to RR, and Lotto schedules, because most of the time processes were on the queue, they were not actually running. They were waiting for other processes.

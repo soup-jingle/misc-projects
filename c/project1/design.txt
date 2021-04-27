@@ -1,0 +1,14 @@
+_Arriving at solution:_
+
+  For both GetPID() and GetSystemTime(), the first thing to do is add trap values to traps.h. After that, in usertraps.s, I added just a few lines of DLX assembly code which correspond to both new functions I was writing, which was very similar to existing procedures in the file. From there, all that is really left to do is implement the functions in process.c.
+
+  For GetPID(), using the second hint from the assignment, I used a method similar to what was in process.c:ProcessFork(). I subtracted the address of the queue holding all PCBs from the address of the current PCB.
+
+  For GetSystemTime(), I am not certain my solution is correct. I added a global int to process.c called _time. Every time process.c:ProcessSchedule runs, I increase _time by the value of the process quantum amount divided by 10000 (which would actually just be the same as increasing it by 1 every time). GetSystemTime() returns _time. When I ran the userprog with different values, the simulated runtime and the time calculated by subtracting the start time from end time calculated by GetSystemTime() were similar (after the multiplication by 100). Though the approximation from GetSystemTime() is always an overestimate because it assumes every process used its full quantum amount. I am not sure why the number comes out to be close to what it seems like it should be, so I am pretty sure this solution is incorrect. But somehow it has worked with multiple runs.
+
+
+_Sequence of events_
+
+  The user program first asks for the PID number. This then triggers a trap, putting the program into kernel mode. While in kernel mode, control is taken away from the user prog, and the function GetPID() in process.c is performed. The traps.c switch statement allows this to happen by the appropriate trap value. GetPID returns the PID number, and through ProcessSetResult, returns that value from the kernel to the user program.
+
+  A Similar process occurs when GetSystemTime() is called, both before and after the loop. The only difference is that the int returned from the from the kernel is the time -- roughly calculated (estimated) by elapsed quanta -- that the system has run. It does not return any UTC time value, but rather the time since the emulator has started running.

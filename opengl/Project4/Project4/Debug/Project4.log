@@ -1,0 +1,5 @@
+﻿  PrelimTPBrain.cpp
+d:\documents\school\cs482\projects\project4\project4\prelimtpbrainglobals.h(209): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\documents\school\cs482\projects\project4\project4\prelimtpbrain.cpp(268): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Project4.vcxproj -> D:\Documents\School\CS482\Projects\Project4\Debug\Project4.exe
+  Project4.vcxproj -> D:\Documents\School\CS482\Projects\Project4\Debug\Project4.pdb (Full PDB)

@@ -1,0 +1,146 @@
+; Compiled by GCC
+.data
+	.align 2
+LC0:
+	.ascii "Usage: \000"
+	.align 2
+LC1:
+	.ascii " handle_str spage_str semaphore_str\n\000"
+	.align 2
+LC2:
+	.ascii "Could not map the virtual address to the memory, exiting...\n\000"
+	.align 2
+LC3:
+	.ascii "Bad semaphore spage.... Exiting!\n\000"
+	.align 2
+LC4:
+	.ascii "This is one of the %d instances you created\n\000"
+	.align 2
+LC5:
+	.ascii "The shared character is %c\n\000"
+	.align 2
+LC6:
+	.ascii "My PID is %d\n\000"
+.text
+	.align 2
+.proc _main
+.global _main
+_main:
+;  Function 'main'; 0 bytes of locals, 0 regs to save.
+	sw	-4(r29),r30	; push fp
+	add	r30,r0,r29	; fp = sp
+	sw	-8(r29),r31	; push ret addr
+	subui	r29,r29,#8	; alloc local storage
+	lw	r2,(r30)
+	lw	r3,4(r30)
+	jal	___main
+	nop	; not filled.
+	snei	r1,r2,#4
+	beqz	r1,L2
+	nop	; not filled.
+	addi	r29,r29,#-8
+	lhi	r5,((LC0)>>16)&0xffff
+	addui	r5,r5,(LC0)&0xffff
+	sw	(r29),r5
+	jal	_Printf
+	nop	; not filled.
+	lw	r3,(r3)
+	sw	(r29),r3
+	jal	_Printf
+	nop	; not filled.
+	lhi	r5,((LC1)>>16)&0xffff
+	addui	r5,r5,(LC1)&0xffff
+	sw	(r29),r5
+	jal	_Printf
+	nop	; not filled.
+	jal	_exit
+	nop	; not filled.
+L2:
+	addi	r29,r29,#-16
+	lw	r5,4(r3)
+	sw	(r29),r5
+	addi	r5,r0,#0
+	sw	4(r29),r5
+	addi	r5,r0,#10
+	sw	8(r29),r5
+	jal	_dstrtol
+	nop	; not filled.
+	add	r2,r0,r1
+	lw	r5,8(r3)
+	sw	(r29),r5
+	addi	r5,r0,#0
+	sw	4(r29),r5
+	addi	r5,r0,#10
+	sw	8(r29),r5
+	jal	_dstrtol
+	nop	; not filled.
+	add	r4,r0,r1
+	lw	r3,8(r3)
+	sw	(r29),r3
+	addi	r5,r0,#0
+	sw	4(r29),r5
+	addi	r5,r0,#10
+	sw	8(r29),r5
+	jal	_dstrtol
+	nop	; not filled.
+	sw	(r29),r2
+	jal	_shmat
+	nop	; not filled.
+	add	r2,r0,r1
+	addi	r29,r29,#16
+	snei	r1,r2,#0
+	bnez	r1,L3
+	nop	; not filled.
+	addi	r29,r29,#-8
+	lhi	r5,((LC2)>>16)&0xffff
+	addui	r5,r5,(LC2)&0xffff
+	sw	(r29),r5
+	jal	_Printf
+	nop	; not filled.
+	jal	_exit
+	nop	; not filled.
+L3:
+	addi	r29,r29,#-8
+	sw	(r29),r4
+	jal	_sem_signal
+	nop	; not filled.
+	addi	r29,r29,#8
+	snei	r1,r1,#0
+	beqz	r1,L4
+	nop	; not filled.
+	addi	r29,r29,#-8
+	lhi	r5,((LC3)>>16)&0xffff
+	addui	r5,r5,(LC3)&0xffff
+	sw	(r29),r5
+	jal	_Printf
+	nop	; not filled.
+	jal	_exit
+	nop	; not filled.
+L4:
+	addi	r29,r29,#-8
+	lhi	r5,((LC4)>>16)&0xffff
+	addui	r5,r5,(LC4)&0xffff
+	sw	(r29),r5
+	lw	r1,(r2)
+	sw	4(r29),r1
+	jal	_Printf
+	nop	; not filled.
+	lhi	r5,((LC5)>>16)&0xffff
+	addui	r5,r5,(LC5)&0xffff
+	sw	(r29),r5
+	lbu	r1,4(r2)
+	sw	4(r29),r1
+	jal	_Printf
+	nop	; not filled.
+	jal	_getpid
+	nop	; not filled.
+	lhi	r5,((LC6)>>16)&0xffff
+	addui	r5,r5,(LC6)&0xffff
+	sw	(r29),r5
+	sw	4(r29),r1
+	jal	_Printf
+	nop	; not filled.
+	addi	r29,r29,#8
+	jal	_exit
+	nop
+.endproc _main

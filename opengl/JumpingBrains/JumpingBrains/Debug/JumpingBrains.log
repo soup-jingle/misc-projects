@@ -1,0 +1,22 @@
+﻿  JumpingBrainDriver.cpp
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.h(77): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbraindriver.cpp(309): warning C4244: 'argument': conversion from 'const double' to 'int', possible loss of data
+  Joint.cpp
+  CrossJoint.cpp
+  Generating Code...
+  Compiling...
+  JumpingBrain.cpp
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.h(77): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(260): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(261): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(319): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(320): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(328): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(329): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(338): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(339): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(346): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+d:\documents\school\cs482\projects\jumpingbrains\jumpingbrains\jumpingbrain.cpp(347): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+  Generating Code...
+  JumpingBrains.vcxproj -> D:\Documents\School\CS482\Projects\JumpingBrains\Debug\JumpingBrains.exe
+  JumpingBrains.vcxproj -> D:\Documents\School\CS482\Projects\JumpingBrains\Debug\JumpingBrains.pdb (Full PDB)

@@ -1,0 +1,88 @@
+1.
+
+30 CPU registers + program counter + PSW = 32 registers (words)
+Reading in new process's program counter = 1 word
+
+=> 33 words * 10 ns = 330ns = 330*10^-9
+
+1/(330*10^-9) = 3030303.03 interrupts
+
+
+***
+2.
+
+500Hz => 500 ticks/sec
+
+2009ns/tick
+
+2009 * 500 = 1,004,500 ns
+
+1,004,500ns/sec => approx 10% of cpu time devoted to clock
+
+
+***
+3.
+
+2000 MHz = 2*10^6 Hz = 2,000,000/sec
+=> .0000005sec
+
+millisecond: 2000
+100 microseconds: 200
+
+
+***
+4.
+
+READ:
+All except 1 allow multiple reads for the same file, depending on how many disks it is stored on at once.
+1 allows possible reading two different files at the same time.
+
+WRITE:
+All but 0 allow pretty similar performance.
+0 Allows for N times write speed if there are N disks.
+1 Requires data to be written twice, once to each disk, can be done at same time.
+
+OVERHEAD:
+No overhead in 0.
+Half of overall disk space is used for overhead in 1 (mirroring).
+For 2 and 3, 1/N disks used for overhead in parity bits.
+For 4 and 5, 1/N disks worth of space is used for overhead in parity blocks.
+
+RELIABILITY:
+One disk failure renders all data unusable in 0.
+For raid 1, up to N/2 disks can be lost, as long as no two disks carry the same data.
+2 through 5, one disk can be lost. Any more and recovery via parity bits/bytes/blocks is impossible.
+2 additionally allows for one bit correction, since it uses a Hamming code for correction.
+
+
+***
+5.
+
+Diffie-Hellman: both parties use the same private keys to encrypt and decrypt.
+  As in, keys = e, d.
+	Alice encrypts with e, Bob decrypts with D.
+	Bob encrypts with D, Alice decrypts with E.
+
+Public-key: both parties have different pairs of public and private keys.
+  As in Alice has keys AS (secret), AP (public), Bob has keys BS (secret), BP (public)
+	Alice encrypts with BP, Bob decrypts with BS.
+	Bob encrypts with AP, Alice decrypts with AS.
+
+
+***
+6.
+
+A perfectly one-way function would be hashing. Data is lost so it is impossible to undo a hash function.
+Functions which are not 'perfectly' one-way, but are one-way in the sense that they are significantly easier to perform than their inverse include exponentiation (inverse is discrete logarithm problem, used in Diffie-Hellman), multiplying large primes (inverse is factoring large numbers with few factors, used in RSA), and elliptic curve point multiplication (inverse is finding multiplicand, used in elliptic curve cryptography).
+
+
+***
+7.
+
+No, I should not be worried. Modern methods of encryption do not rely on the concealment of the method, but rather of the keys. The way to perform all methods of encryption is publicly available knowledge. But given that knowledge, decrypting something is extremely difficult and time consuming (as in cannot be brute-forced for at least decades, if not lifetimes).
+
+
+***
+8.
+
+In 'hw6_8.c'
