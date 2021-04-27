@@ -1,5 +1,5 @@
 default:
-	./compile pr03.lisp
+	./compile knapsack.lisp
 
 install:
 	wget http://iweb.dl.sourceforge.net/project/sbcl/sbcl/1.3.2/sbcl-1.3.2-x86-64-linux-binary.tar.bz2;\
