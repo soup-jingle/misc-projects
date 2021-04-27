@@ -1,0 +1,2 @@
+* About
+Just a collection of solutions to [[ttps://projecteuler.net][Project Euler]] problems written in *clojure*. Not well-organized.

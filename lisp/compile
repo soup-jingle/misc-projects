@@ -1,0 +1,2 @@
+#!/bin/bash
+sh sbcl/run-sbcl.sh --noinform --eval "(compile-file \"$1\")" --eval "(quit)" > /dev/null

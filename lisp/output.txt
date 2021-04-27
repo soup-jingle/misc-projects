@@ -1,0 +1,11 @@
+Maximum weight: 10
+4 40 3 50 
+Exhaustive: 0.0s
+Dynamic: 0.0s
+Branch and Bound: (error)
+Greedy Approx.: 0.0s
+Optimum Weight: 7
+Optimum Value: 90
+Approximate Weight: 7
+Approximate Value: 90
+Approximation Accuracy: 1

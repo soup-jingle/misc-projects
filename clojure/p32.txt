@@ -1,0 +1,22 @@
+(count combos)
+
+(def combos (for [pnd2 (range (inc (/ 200 200)))
+                  pnd1 (range (inc (/ (- 200 (* 200 pnd2)) 100)))
+                  p50 (range (inc (/ (- 200 (* 200 pnd2) 
+                                        (* 100 pnd1)) 50)))
+                  p20 (range (inc (/ (- 200 (* 200 pnd2) 
+                                        (* 100 pnd1) (* 50 p50)) 20)))
+                  p10 (range (inc (/ (- 200 (* 200 pnd2) (* 100 pnd1)
+                                        (* 50 p50) (* 20 p20)) 10)))
+                  p5 (range (inc (/ (- 200 (* 200 pnd2) (* 100 pnd1) 
+                                       (* 50 p50)(* 20 p20) 
+                                       (* 10 p10)) 5)))
+                  p2 (range (inc (/ (- 200 (* 200 pnd2) (* 100 pnd1) 
+                                       (* 50 p50) (* 20 p20) 
+                                       (* 10 p10)))))
+user> (count combos)
+75173
+user> ) (* 5 p5)) 2)))]
+   (vector pnd2 pnd1 p50 p20 p10 p5 p2 
+           (- 200 (* 200 pnd2) (* 100 pnd1) (* 50 p50) 
+              (* 20 p20) (* 10 p10) (* 5 p5) (* 2 p2)))))
